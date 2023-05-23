@@ -1,5 +1,5 @@
 from functools import reduce
-from adt.tree import Tree
+from lib.adt.tree import Tree
 from parsing.earley.earley import Grammar, Parser, ParseTrees
 from parsing.silly import SillyLexer
 

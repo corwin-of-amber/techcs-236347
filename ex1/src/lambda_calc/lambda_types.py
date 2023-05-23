@@ -7,7 +7,7 @@ Implement type checking and type inference for simply-typed lambda calculus.
 
 from lambda_calc.syntax import LambdaParser, pretty
 from lambda_calc.stdlib import CONSTANTS
-from adt.tree import Tree
+from lib.adt.tree import Tree
 
 
 def type_inference(expr: Tree) -> (Tree, Tree):
