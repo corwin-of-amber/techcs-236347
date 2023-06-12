@@ -59,6 +59,17 @@ Proof.
   simpl. lia.
 Qed.
 
+(* Now this: *)
+(* { True }  y := 5; x := 5  { x + y = 10 }  *)
+Lemma easy_peasy' : hoare (fun s => True)
+                          (seq (assign y # 5) (assign x #5))
+                          (fun s => s x + s y = 10).
+Proof.
+  econstructor. 2: apply easy_peasy. (* Note: we can use the previous lemma! *)
+  eapply hoare_weaken_l. 2: constructor.
+  simpl. reflexivity.
+Qed.
+
 
 (* The factorial program *)
 Definition factorial_cmd :=
