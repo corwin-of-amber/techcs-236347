@@ -46,8 +46,8 @@ class Sentence:
         #TODO handle Apertium format's beginning ^ and ending $ symbols
 
         # prepare regular expressions to find word and tags
-        lemmarex = re.compile('^[^\/]*')
-        tagsrex = re.compile('\/[^\<]*\<([^\>]*)\>')
+        lemmarex = re.compile(r'^[^\/]*')
+        tagsrex = re.compile(r'\/[^\<]*\<([^\>]*)\>')
 
         sentence = Sentence()
         words = text.strip().split(' ')
