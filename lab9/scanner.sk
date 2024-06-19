@@ -1,0 +1,14 @@
+
+
+
+
+bit match([int n], char[n] s) {
+    /* So clean :) */
+}
+
+harness void program() {
+    // allow a*b*c*
+    assert match({}) == 1;
+    assert match({'a'}) == 1;
+    /* ETC. */
+}
