@@ -2,7 +2,7 @@
 import re
 from collections.abc import Iterable
 
-from adt.tree import Tree
+from lib.adt.tree import Tree
 from ..earley.sentence import Word
 
 
