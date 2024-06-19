@@ -1,8 +1,0 @@
-eclipse.preferences.version=1
-encoding//lib/parsing/earley/chart.py=utf-8
-encoding//lib/parsing/earley/earley.py=utf-8
-encoding//lib/parsing/earley/grammar.py=utf-8
-encoding//lib/parsing/earley/parse_trees.py=utf-8
-encoding//lib/parsing/earley/parser.py=utf-8
-encoding//lib/parsing/earley/sentence.py=utf-8
-encoding//lib/parsing/indent/block.py=utf-8
