@@ -24,9 +24,6 @@ Qed.
 
 Section PlayingWithTheBigBoysNow.
   
-  Search max.  (* There's definitely a bunch of them.      *)
-               (* Later on, try to narrow down the search. *)
-
   (*
   Lemma max_decreases :  ???        <-----   fill this in and prove!!
   *)
@@ -37,26 +34,11 @@ Section PlayingWithTheBigBoysNow.
     clear a b.
     intros a b IH apos bpos.
     apply case_split_3way with (a:=a) (b:=b); intro H.
-    - induction IH with (a':=a) (b':=b-a).     (* a < b *)
-      * exists x. apply step_b'. assumption. assumption.
-      * apply max_decreases. firstorder.
-      * assumption.
-      * Search "=" "<".
-        (* psst, try this as well:
-        firstorder using neq_0_lt, neq_sym, sub_gt. *)
-        apply neq_0_lt.
-        apply neq_sym.
-        apply sub_gt. assumption.
-    - exists a. rewrite H. constructor.             (* a = b *)
-    - induction IH with (a':=a-b) (b':=b).     (* a > b *)
-      * exists x. apply step_a'. assumption. assumption.
-      * Check max_comm.
-        rewrite max_comm. rewrite max_comm with (n:=a).
-        apply max_decreases. firstorder.
-      * apply neq_0_lt.
-        apply neq_sym.
-        apply sub_gt. assumption.
-      * assumption.
+    - destruct IH with (a':=a) (b':=b-a).     (* a < b *)
+      (*  ???  *)
+    - subst. eexists. constructor.            (* a = b *)
+    - destruct IH with (a':=a-b) (b':=b).     (* a > b *)
+      (*  ???  *)
   Qed.
 
 End PlayingWithTheBigBoysNow.
