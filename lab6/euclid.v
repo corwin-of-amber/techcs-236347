@@ -80,6 +80,8 @@ Module MainProof.
   (* ----  some free lemmas!  (you don't have to prove them)  ---- *)
   Lemma gt0_le x y : gt01 x y = 0 <-> x <= y.  Admitted.
   Lemma gt1_gt x y : gt01 x y <> 0 <-> x > y.  Admitted.
+  Lemma ne0_eq x y : ne01 x y = 0 <-> x = y.  Admitted.
+  Lemma ne1_ne x y : ne01 x y <> 0 <-> x <> y.  Admitted.
   Lemma div_sub a b z : (z | a) -> (z | b) -> (z | a - b).  Admitted.
   Lemma sub_div1 a b z : a >= b -> (z | a) -> (z | a - b) -> (z | b).  Admitted.
   Lemma sub_div2 a b z : a >= b -> (z | b) -> (z | a - b) -> (z | a).  Admitted.
@@ -94,7 +96,7 @@ Module MainProof.
                         forall z, (z | a0) /\ (z | b0) <-> (z | a) /\ (z | b - a).
   Admitted.
 
-  (* Hint 3: Use aux1 and aux2 to prove eucliv_inv.
+  (* Hint 3: Use aux1 and aux2 to prove euclid_inv.
    *         Then use euclid_inv to prove euclid_post.
    *         Time permitting, go back to aux1 and aux2 and prove them.
    *         Use the other lemmas where appropriate.
