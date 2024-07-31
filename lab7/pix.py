@@ -1,6 +1,9 @@
-from z3 import Int, Xor, BoolVal, Solver, sat
+import typing
+
+from z3 import Int, Xor, BoolVal, Solver, sat, Ast, ModelRef
 from functools import reduce
 
+# fmt: off
                                             #      |   | 1 |   | 1 |   |
 rows = [[Int('r00'), 1, Int('r01'), 1],     #      | 1 | 1 | 1 | 1 | 1 |
         [],                                 # -----+---+---+---+---+---+
@@ -10,34 +13,55 @@ cols = [[Int('c00'), 1],                    #      |   |   |   |   |   |
         [Int('c10'), 1, Int('c11'), 1],     # -----+---+---+---+---+---+
         [Int('c20'), 1],                    #  1 1 |   |   |   |   |   |
         [Int('c30'), 1, Int('c31'), 1],     # -----+---+---+---+---+---+
-        [Int('c40'), 1]]                    #    3 |   |   |   |   |   |
-                                            # -----+---+---+---+---+---+
+        [Int('c40'), 1],                    #    3 |   |   |   |   |   |
+        ]                                   # -----+---+---+---+---+---+
+
+# fmt: on
+
 nrows = len(rows)
 ncols = len(cols)
 
 
-def prefix_sum(l):
-    """ Auxiliary function for computing the sums of all prefixes of a list l """
-    return [sum(l[: i + 1]) for i in range(len(l))]
+Formula: typing.TypeAlias = Ast | bool
+T = typing.TypeVar("T")
 
 
-def xor_all(l):
-    """ Auxiliary function for computing the xor of the elements of a list l """
-    if not l:
+def prefix_sum(fs: list[T]) -> list[T]:
+    """Auxiliary function for computing the sums of all prefixes of a list fs"""
+    return [sum(fs[: i + 1]) for i in range(len(fs))]
+
+
+def xor_all(fs: list[BoolVal]) -> BoolVal:
+    """Auxiliary function for computing the xor of the elements of a list fs"""
+    if not fs:
         return BoolVal(False)
-    return reduce(Xor, l)
+    return reduce(Xor, fs)
 
 
-def solve(formulas):
+def solve(*formulas: Formula) -> typing.Optional[ModelRef]:
     """
     Solves a set of formulas using SMT; prints the outcome.
     Return model if SAT, None if not.
     """
     s = Solver()
-    s.add(formulas)
+    s.add(*formulas)
     status = s.check()
     print(status)
     if status == sat:
         m = s.model()
         print(m)
         return m
+    return None
+
+
+def draw(sol: list[list[bool]]) -> None:
+    print("-" * 40)
+    for row in sol:
+        print(" ".join(("■" if b else " ") for b in row))
+
+
+def pix_color(j: int, r: list[int | Int]) -> Formula:
+    """This function receives an index j (int) and the run-lengths r (list of ints and int unknowns),
+    and returns a Boolean expression describing the color of pixel j.
+    A false value represents a white pixel, a true value represents a black pixel."""
+    raise NotImplementedError
