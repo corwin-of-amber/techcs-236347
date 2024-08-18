@@ -17,13 +17,13 @@ def test_0() -> None:
     )
     assert ast is not None
 
-    def linv(env: Env):
+    def linv(env: Env) -> Formula:
         return env["a"] == env["b"]
 
-    def P(env: Env):
+    def P(env: Env) -> Formula:
         return True
 
-    def Q(env: Env):
+    def Q(env: Env) -> Formula:
         return And(env["a"] == env["b"], env["i"] >= env["n"])
 
     assert verify(P, ast, Q, linv)
