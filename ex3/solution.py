@@ -3,7 +3,7 @@ import operator
 
 import z3
 
-import syntax.while_lang as lang
+from syntax.while_lang import parse, Id, Expr, Int, BinOp, Skip, Assign, Seq, If, While, Stmt
 
 
 type Formula = z3.Ast | bool
@@ -37,7 +37,7 @@ def upd(d: Env, k: PVar, v: Formula) -> Env:
 
 
 def verify(
-    P: Invariant, ast: lang.Stmt, Q: Invariant, linv: Invariant = lambda _: True
+    P: Invariant, ast: Stmt, Q: Invariant, linv: Invariant = lambda _: True
 ) -> bool:
     """Verify a Hoare triple {P} c {Q}
     Where P, Q are assertions (see below for examples)
@@ -57,7 +57,7 @@ def main():
     Q = lambda d: d["a"] == d["b"]
     linv = lambda d: d["a"] == d["b"]
 
-    ast = lang.parse(program)
+    ast = parse(program)
     # Your task is to implement "verify"
     verify(P, ast, Q, linv=linv)
 

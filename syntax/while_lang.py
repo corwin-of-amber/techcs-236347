@@ -136,7 +136,7 @@ def pretty(stmt: Stmt, indent: int = 0) -> str:
                 right = p(rhs)
                 return f"({left} {op} {right})"
             case _:
-                raise ValueError(f"Unknown expr: {e}")
+                raise ValueError(f"Unknown expr: {e!r} of type {type(e)}")
 
     def s(s_: Stmt, lvl: int) -> str:
         pad = INDENT * lvl
@@ -157,6 +157,6 @@ def pretty(stmt: Stmt, indent: int = 0) -> str:
                 body_str = s(body, lvl + 1)
                 return f"{pad}while {cond_str} do\n{body_str}"
             case _:
-                raise ValueError(f"Unknown stmt: {s_}")
+                raise ValueError(f"Unknown stmt: {s_!r} of type {type(s_)}")
 
     return s(stmt, indent)
