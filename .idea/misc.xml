@@ -3,8 +3,7 @@
   <component name="Black">
     <option name="enabledOnReformat" value="true" />
     <option name="enabledOnSave" value="true" />
-    <option name="pathToExecutable" value="C:\Users\elaza\AppData\Local\Programs\Python\Python311\Scripts\black.exe" />
-    <option name="sdkName" value="Python 3.11" />
+    <option name="sdkName" value="Python 3.12 (techcs-236347)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (Teaching.SSAR.Solutions)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (Teaching.SSAR.Solutions)" project-jdk-type="Python SDK" />
 </project>

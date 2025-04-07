@@ -2,11 +2,13 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 __pycache__
+syntax.egg-info/
 
 **/scanner.h
 **/scanner.cpp
 **/scanner
 
+venv/
 
 # User-specific stuff
 .idea/**/workspace.xml
