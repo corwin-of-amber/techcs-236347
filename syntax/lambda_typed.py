@@ -54,9 +54,7 @@ def is_grounded_type(t: LambdaType, require_fully_annotated: bool) -> bool:
     match t:
         case None:
             # We probably forgot to freshen the type variable after parsing
-            raise ParseError(
-                f"Type variable is None for {t}. Did you forget to call _instantiate_placeholders()?"
-            )
+            assert False, f"Type variable is None for {t}. Did you forget to call _instantiate_placeholders()?"
         case TypeName() | Primitive():
             return True
         case Arrow(a, b):

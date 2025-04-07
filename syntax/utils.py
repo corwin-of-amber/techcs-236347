@@ -9,7 +9,9 @@ class ParseError(Exception):
 
 @lru_cache(maxsize=None)
 def make_node[T](cls: type[T], *args, **kwargs) -> T:
-    # Convert kwargs to a hashable structure (tuple of sorted key-value pairs)
+    """Maintains a pool of allocated object, so equality tests are fast.
+    cls(*args, **kwargs) must be recursively-immutable for correctness."""
+    assert cls.__dataclass_params__.frozen
     return cls(*args, **kwargs)
 
 
