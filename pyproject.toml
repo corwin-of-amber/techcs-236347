@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "syntax"
+version = "0.1.0"
+dependencies = [
+    "importlib_resources==6.5.2",
+    "lark==1.2.2",
+    "z3-solver==4.13.0.0"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==8.3.5",
+    "pytest-xdist==3.2.1"
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["syntax"]
+
+[tool.setuptools.package-data]
+"syntax" = ["*.lark"]
+
+[tool.pytest.ini_options]
+testpaths = ["syntax"]

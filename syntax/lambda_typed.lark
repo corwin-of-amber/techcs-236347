@@ -1,0 +1,27 @@
+?start: expr
+
+?expr: app
+
+?app: app non_app -> app
+    | non_app
+
+?non_app: "let" _paren{decl} "=" expr "in" expr -> let
+        | "\\" _paren{decl}+ "." expr           -> abs
+        | ID                                    -> var
+        | INT                                   -> num
+        | "(" expr ")"
+
+_paren{r}: r | "(" r ")"
+
+%import common.CNAME -> ID
+%import common.INT
+%import common.WS
+%ignore WS
+
+?decl: ID [":" type] -> decl
+
+?type: typename "->" type -> arrow
+     | typename
+     | "(" type ")"
+
+typename: ID -> typename
