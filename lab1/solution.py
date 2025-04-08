@@ -6,6 +6,6 @@ def alpha_equivalent(e1: LambdaExpr, e2: LambdaExpr) -> bool:
     raise NotImplementedError
 
 
-def normal_form(e: LambdaExpr, fuel: int = 100_000) -> LambdaExpr:
+def interpret(e: LambdaExpr, fuel: int = 100_000) -> LambdaExpr:
     """Keep performing normal-order reduction steps until you reach normal form, detect divergence or run out of fuel."""
     raise NotImplementedError
