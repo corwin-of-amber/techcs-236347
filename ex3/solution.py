@@ -3,13 +3,27 @@ import operator
 
 import z3
 
-from syntax.while_lang import parse, Id, Expr, Int, BinOp, Skip, Assign, Seq, If, While, Stmt
+from syntax.while_lang import (
+    parse,
+    Id,
+    Expr,
+    Int,
+    BinOp,
+    Skip,
+    Assign,
+    Seq,
+    If,
+    While,
+    Stmt,
+)
 
 
 type Formula = z3.Ast | bool
 type PVar = str
 type Env = dict[PVar, Formula]
 type Invariant = typing.Callable[[Env], Formula]
+
+TRIVIAL: typing.Final = lambda _: True
 
 
 OP = {
@@ -36,30 +50,42 @@ def upd(d: Env, k: PVar, v: Formula) -> Env:
     return d
 
 
-def verify(
-    P: Invariant, ast: Stmt, Q: Invariant, linv: Invariant = lambda _: True
-) -> bool:
-    """Verify a Hoare triple {P} c {Q}
-    Where P, Q are assertions (see below for examples)
-    and ast is the AST of the command c.
-    Returns `True` iff the triple is valid.
-    Also prints the counterexample (model) returned from Z3 in case
-    it is not.
+def find_solution(
+    P: Invariant, stmt: Stmt, Q: Invariant, linv: Invariant = lambda _: True
+) -> z3.Solver:
+    """
+    Try to find proof for Hoare triple {P} c {Q}
+    Where P, Q are assertions, and stmt is the modern AST.
+    Returns a z3.Solver object, ready to be checked.
     """
     raise NotImplementedError
 
 
-def main():
+def verify(P: Invariant, stmt: Stmt, Q: Invariant, linv: Invariant = TRIVIAL) -> bool:
+    """
+    Verifies a Hoare triple {P} c {Q}
+    Where P, Q are assertions, and stmt is the modern AST.
+    Returns True if the triple is valid.
+    """
+    solver = find_solution(P, stmt, Q, linv)
+    return solver.check() == z3.unsat
+
+
+def main() -> None:
     # example program
-    pvars = ["a", "b", "i", "n"]
     program = "a := b ; while i < n do ( a := a + 1 ; b := b + 1 )"
-    P = lambda _: True
+    P = TRIVIAL
     Q = lambda d: d["a"] == d["b"]
     linv = lambda d: d["a"] == d["b"]
 
     ast = parse(program)
     # Your task is to implement "verify"
-    verify(P, ast, Q, linv=linv)
+    solver = find_solution(P, ast, Q, linv=linv)
+    if solver.check() == z3.sat:
+        print("Counterexample found:")
+        print(solver.model())
+    else:
+        print("No counterexample found. The Hoare triple is valid.")
 
 
 if __name__ == "__main__":

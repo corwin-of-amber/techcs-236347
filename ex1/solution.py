@@ -5,7 +5,7 @@ Your task:
 Implement type checking and type inference for simply-typed lambda calculus.
 """
 
-from syntax.lambda_typed import parse, pretty, TypedExpr, is_grounded_expr
+from syntax.lambda_typed import parse, TypedExpr, is_grounded_expr
 
 
 class TypeMismatchError(TypeError):
@@ -32,9 +32,10 @@ def infer_types(expr: TypedExpr) -> TypedExpr:
     return result
 
 
-def main():
+def main() -> None:
     expr = parse(r"""\x: int. x""")
-    print(expr)
+    print(f"{expr!r}")
+    print(f"{expr}")
     print(infer_types(expr))
 
 

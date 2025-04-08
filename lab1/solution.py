@@ -1,8 +1,11 @@
-from syntax.lambda_pure import LambdaExpr, App, Lambda, Let, Id
+from syntax.lambda_pure import LambdaExpr
 
 
-def normal_form(expr: LambdaExpr, max_steps: int = 100_000):
-    """
-    Keep performing normal-order reduction step until you reach normal form, detect divergence or run out of fuel.
-    """
+def alpha_equivalent(e1: LambdaExpr, e2: LambdaExpr) -> bool:
+    """Check if two lambda expressions differ only in the names of their bound variables."""
+    raise NotImplementedError
+
+
+def normal_form(e: LambdaExpr, fuel: int = 100_000) -> LambdaExpr:
+    """Keep performing normal-order reduction steps until you reach normal form, detect divergence or run out of fuel."""
     raise NotImplementedError
