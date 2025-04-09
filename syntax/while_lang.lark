@@ -1,0 +1,36 @@
+
+?start: stmt
+
+?stmt: simple_stmt
+     | simple_stmt ";" stmt      -> seq
+
+?simple_stmt: "skip"                                          -> skip
+            | NAME ":=" expr                                  -> assign
+            | "if" expr "then" simple_stmt "else" simple_stmt -> if_
+            | "while" expr "do" simple_stmt                   -> while_
+            | "(" stmt ")"                                    -> block
+
+// Precedence: lowest to highest
+
+?expr: expr CMPOP rel_expr        -> cmp
+     | rel_expr
+
+?rel_expr: rel_expr ADDSUB term -> addsub
+         | term
+
+?term: term MULDIV factor       -> muldiv
+     | factor
+
+?factor: "-" factor     -> neg
+       | NAME           -> var
+       | INT            -> num
+       | "(" expr ")"   -> group_expr
+
+MULDIV: "*" | "/"
+ADDSUB: "+" | "-"
+CMPOP: "<" | ">" | "<=" | ">=" | "=" | "!="
+
+%import common.CNAME -> NAME
+%import common.INT
+%import common.WS
+%ignore WS

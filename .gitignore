@@ -2,6 +2,9 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 __pycache__
+techcs_syntax.egg-info/
+build/
+venv/
 
 **/scanner.h
 **/scanner.cpp
