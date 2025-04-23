@@ -31,7 +31,7 @@ class TypeName:
 @dataclass(frozen=True, slots=True)
 class TypeVar:
     """Represents a placeholder for a yet-unknown type.
-    This is used when parsing an expression without explicit type, and for type inference.
+    This is used when parsing an expression without an explicit type, and for type inference.
     In the former case, it will not be pretty-printed."""
 
     id: int  # if negative, it is an internal type variable, created during parsing and not pretty-printed
@@ -251,7 +251,7 @@ _factory = NodeFactory()
 
 def parse(program_text: str) -> TypedExpr:
     """Parses a typed lambda calculus program and returns the corresponding expression.
-    all types are either ground types or fresh type variables for which .is_internal() is True.
+    All types are either ground types or fresh type variables for which .is_internal() is True.
     """
     grammar = _read_grammar("lambda_typed.lark", _factory)
     try:
