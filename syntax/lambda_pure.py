@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from lark import Transformer, v_args, UnexpectedInput
 
-from syntax.utils import make_node, ParseError, _read_grammar
+from syntax.utils import make_node, ParseError, _read_grammar, _install_str_hook
 
 
 type LambdaExpr = Id | Int | Let | Lambda | App
@@ -73,6 +73,7 @@ def parse(program_text: str) -> LambdaExpr:
         raise ParseError() from e
 
 
+@_install_str_hook(Id, Int, Let, Lambda, App)
 def pretty(expr: LambdaExpr) -> str:
     """Formats an expression for pretty printing."""
     match expr:
@@ -85,6 +86,8 @@ def pretty(expr: LambdaExpr) -> str:
         case Lambda(var, body):
             return f"\\{var.name}. {pretty(body)}"
         case App(func, arg):
+            if isinstance(func, (Lambda, Let)):
+                return f"(({pretty(func)}) {pretty(arg)})"
             return f"({pretty(func)} {pretty(arg)})"
         case _:
             raise ValueError(f"Unknown expression type: {type(expr)}")
