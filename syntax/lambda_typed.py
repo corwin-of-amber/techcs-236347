@@ -96,9 +96,9 @@ class Int:
     n: int
 
 
-class Bool(enum.Enum):
-    FALSE = "False"
-    TRUE = "True"
+@dataclass(frozen=True, slots=True)
+class Bool:
+    b: bool
 
 
 @dataclass(frozen=True, slots=True)
@@ -222,9 +222,9 @@ class NodeFactory(Transformer):
 
     def var(self, token):
         if token.value == "True":
-            return TypedExpr(Bool.TRUE, None)  # type: ignore[param]
+            return TypedExpr(Bool(True), None)  # type: ignore[param]
         if token.value == "False":
-            return TypedExpr(Bool.FALSE, None)  # type: ignore[param]
+            return TypedExpr(Bool(False), None)  # type: ignore[param]
         return TypedExpr(Id(token.value), None)  # type: ignore[param]
 
     def num(self, token):
@@ -306,10 +306,8 @@ def pretty(expr: Expr) -> str:
             return name
         case Int(n):
             return str(n)
-        case Bool.TRUE:
-            return "True"
-        case Bool.FALSE:
-            return "False"
+        case Bool(b):
+            return "True" if b else "False"
         case Let() as let:
             return f"let {pretty_decl(let.decl, omit_parens=True)} = {pretty_typed(let.defn, omit_parens=True)} in {pretty_typed(let.body)}"
         case Lambda(decl, body, ret):
